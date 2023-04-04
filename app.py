@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, redirect, url_for
 from config import Config
 from models import Player, Game, db
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, SubmitGameForm
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask_migrate import Migrate
 
@@ -52,6 +52,31 @@ def login():
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
+    
+# Add this new route to app.py
+@app.route('/submit_game', methods=['GET', 'POST'])
+@login_required
+def submit_game():
+    form = SubmitGameForm()
+    if form.validate_on_submit():
+        player = Player.query.filter_by(username=form.player_username.data).first()
+        opponent = Player.query.filter_by(username=form.opponent_username.data).first()
+        if player is None or opponent is None:
+            flash('Invalid player or opponent username')
+            return redirect(url_for('submit_game'))
+        game = Game(player_id=player.id, opponent_id=opponent.id,
+                    player_score=form.player_score.data, opponent_score=form.opponent_score.data)
+        db.session.add(game)
+        db.session.commit()
+        flash('New game submitted')
+        return redirect(url_for('submit_game'))
+    return render_template('submit_game.html', form=form)
+    
+@app.route('/view_games')
+@login_required
+def view_games():
+    games = Game.query.order_by(Game.timestamp.desc()).all()
+    return render_template('view_games.html', games=games)
 
 @app.route('/logout')
 def logout():
