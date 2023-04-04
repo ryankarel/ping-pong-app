@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Welcome, {{ current_user.username }}!</h1>
+    <h2>Game History</h2>
+    <table>
+        <tr>
+            <th>Timestamp</th>
+            <th>Opponent</th>
+            <th>Score</th>
+        </tr>
+        {% for game in games %}
+        <tr>
+            <td>{{ game.timestamp }}</td>
+            <td>{{ game.opponent.username }}</td>
+            <td>{{ game.player_score }} - {{ game.opponent_score }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
