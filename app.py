@@ -69,7 +69,7 @@ def submit_game():
         db.session.add(game)
         db.session.commit()
         flash('New game submitted')
-        return redirect(url_for('submit_game'))
+        return redirect(url_for('view_games'))
     return render_template('submit_game.html', form=form)
     
 @app.route('/view_games')

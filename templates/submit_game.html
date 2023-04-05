@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Submit New Game</h1>
+	<div class="container">
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.player_username.label }}<br>
+            {{ form.player_username(size=32) }}
+        </p>
+        <p>
+            {{ form.opponent_username.label }}<br>
+            {{ form.opponent_username(size=32) }}
+        </p>
+        <p>
+            {{ form.player_score.label }}<br>
+            {{ form.player_score(size=32) }}
+        </p>
+        <p>
+            {{ form.opponent_score.label }}<br>
+            {{ form.opponent_score(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+	</div>
+{% endblock %}

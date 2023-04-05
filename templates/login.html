@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1>Login</h1>
+	<div class="container">
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
@@ -19,4 +20,5 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
+	</div>
 {% endblock %}

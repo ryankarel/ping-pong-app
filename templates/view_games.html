@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>All Games</h1>
+	<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Player</th>
+                <th>Opponent</th>
+                <th>Player Score</th>
+                <th>Opponent Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+                <tr>
+                    <td>{{ game.timestamp.strftime('%m/%d/%y %H:%M') }}</td>
+                    <td>{{ game.player.username }}</td>
+                    <td>{{ game.opponent.username }}</td>
+                    <td>{{ game.player_score }}</td>
+                    <td>{{ game.opponent_score }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+	</div>
+{% endblock %}
